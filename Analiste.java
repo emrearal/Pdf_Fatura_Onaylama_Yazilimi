@@ -41,11 +41,11 @@ public class Analiste implements ActionListener {
 	static String ftpyolu="/sanal/faturaonayklasoru/1-operasyononayladi/";
 	static String host = "88.188.198.444";
     static String user = "user";
-    static String pass = "pass";
+    static String pass = "password";
     
 	static String[] artilisonrasi;
 	static JScrollPane sp;
-	static boolean kirmizikart=false,ftphata=false;;
+	static boolean kirmizikart=false,ftphata=false,oldur=false;
 	static int c=0,b=0,p=0;
 	private static final int BUFFER_SIZE = 4096;
 	
@@ -68,11 +68,11 @@ public class Analiste implements ActionListener {
 	   cerceve.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	   panel1 = new JPanel();
 	
-	   dugme1 =new JButton("FATURA İNCELE");
+	   dugme1 =new JButton("FATURA Ä°NCELE");
 	   dugme1.addActionListener(new Analiste());
 	   dugme1.setActionCommand(actions.incele.name());
 	   
-	   dugme2 =new JButton("FTP'YE GÖNDER");
+	   dugme2 =new JButton("FTP'YE GÃ–NDER");
 	   dugme2.addActionListener(new Analiste());
 	   dugme2.setActionCommand(actions.gonder.name());
 	   
@@ -82,15 +82,23 @@ public class Analiste implements ActionListener {
 	   
 	   panel1.add(dugme1);
 	   panel1.add(dugme2);
-	  // panel1.add(dugme3);   şimdilik bu düğmeye gerek yok. 
+	  // panel1.add(dugme3);   ÅŸimdilik bu dÃ¼ÄŸmeye gerek yok. 
 	
-	   // klasördeki dosyaları listeleme ve sayısını alma
+	   // klasÃ¶rdeki dosyalarÄ± listeleme ve sayÄ±sÄ±nÄ± alma
 	   	String[] dosyalistesi;
-	   	
+	       	
         File file = new File(yerelklasoryolu);
+        
+        if (file.isDirectory()==false) {     // Yerel klasÃ¶r mevcur deÄŸilse
+        	oldur=true;
+        	Bilgipenceresi.anons("Onaylanacak FaturalarÄ± Ä°Ã§eren Yerel Klasor bulunamadÄ±. "
+        +yerelklasoryolu+" adlÄ± klasÃ¶rÃ¼ oluÅŸturunuz.");
+        	return;
+        }
+        
         dosyalistesi = file.list();
         
-     // birinci döngü : toplam kaç tane var ?
+     // birinci dÃ¶ngÃ¼ : toplam kaÃ§ tane var ?
        for (String siradaki : dosyalistesi) {     
 
     	   String dosyasoyadi= siradaki.substring(siradaki.length()-4);
@@ -114,7 +122,7 @@ public class Analiste implements ActionListener {
        c=0;
        b=0;
   
-       // ikinci döngü pdf olanları ayrı listeye koy
+       // ikinci dÃ¶ngÃ¼ pdf olanlarÄ± ayrÄ± listeye koy
        for (String siradaki : dosyalistesi) {     
     	   
     	   String dosyasoyadi= siradaki.substring(siradaki.length()-4);
@@ -131,7 +139,7 @@ public class Analiste implements ActionListener {
     	   }
     	   }
           
-  // işlem görenin ve artılananın tekrar listelenmemesi için süzme işlemi 
+  // iÅŸlem gÃ¶renin ve artÄ±lananÄ±n tekrar listelenmemesi iÃ§in sÃ¼zme iÅŸlemi 
        for (int z=0; z<c ;z++) {
        
     	   for (int i=0 ; i<b ;i++ ) {
@@ -150,8 +158,8 @@ public class Analiste implements ActionListener {
         }    
         p=0;
            
-    // Tablo oluşturma 
-        String[] sutun = { "OPERASYON MODÜLÜ" };
+    // Tablo oluÅŸturma 
+        String[] sutun = { "OPERASYON MODÃœLÃœ" };
         tablo= new JTable(pdflistesibenzersiz,sutun);  
 		sp=new JScrollPane(tablo); 
 		sp.setPreferredSize(new Dimension(300,645));
@@ -173,13 +181,13 @@ public class Analiste implements ActionListener {
       
 	    cerceve.setVisible(true);
        
-	    ListSelectionModel cellSelectionModel = tablo.getSelectionModel();               // listeden seçileni dinleme kısmı
+	    ListSelectionModel cellSelectionModel = tablo.getSelectionModel();               // listeden seÃ§ileni dinleme kÄ±smÄ±
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
           public void valueChanged(ListSelectionEvent e) {
            
-        	  if(!e.getValueIsAdjusting())  {    						// bu IF iki defa yazmaması için konuldu. 
+        	  if(!e.getValueIsAdjusting())  {    						// bu IF iki defa yazmamasÄ± iÃ§in konuldu. 
       
         		  int selectedRow     = tablo.getSelectedRow();
           		secilendosya = (String) tablo.getValueAt(selectedRow,0 );
@@ -211,7 +219,7 @@ public class Analiste implements ActionListener {
 	        File file = new File(yerelklasoryolu);
 	        dosyalistesi = file.list();
 	        
-	     // birinci döngü : toplam kaç tane var ?
+	     // birinci dÃ¶ngÃ¼ : toplam kaÃ§ tane var ?
 	       for (String siradaki : dosyalistesi) {     
 
 	    	   String dosyasoyadi= siradaki.substring(siradaki.length()-4);
@@ -227,7 +235,7 @@ public class Analiste implements ActionListener {
 	       
 	       if ((pdflistesibenzersiz.length)!=0) {
 	    	  
-	    	   Bilgipenceresi.anons("Onaysız Faturalar Var. Tamamı Onaylanmadan Gönderim Yapılamaz.");
+	    	   Bilgipenceresi.anons("OnaysÄ±z Faturalar Var. TamamÄ± Onaylanmadan GÃ¶nderim YapÄ±lamaz.");
 	    	   return;
 	       }
 	    	
@@ -242,17 +250,17 @@ public class Analiste implements ActionListener {
 		    secilendosya="asgard.txt";
 		    secilenyol=yerelklasoryolu+"/";
 		    			
-		    upload();  // Onaylıları FTP sunucusuna gönder
+		    upload();  // OnaylÄ±larÄ± FTP sunucusuna gÃ¶nder
 		     
 		    if (ftphata==true) {
-		    	Bilgipenceresi.anons("FTP Aktarım Hatası !!");
+		    	Bilgipenceresi.anons("FTP AktarÄ±m HatasÄ± !!");
 		    	ftphata=false;
 		    	cerceve.dispose();
 				 Analiste.anametod();
 		    	
 		    	return;
 		    }else {
-		    	Bilgipenceresi.anons("FTP'ye Aktarma Başarılı.");
+		    	Bilgipenceresi.anons("FTP'ye Aktarma BaÅŸarÄ±lÄ±.");
 		    }
 		    
 		    for(int i = 0 ; i<c ; i++) {   // Orjinalleri sil. 
@@ -263,7 +271,7 @@ public class Analiste implements ActionListener {
 			  	  }
 			    }
 		     
-		    for(int i = 0 ; i<b ; i++) {   //  Onaylıları yerelden sil
+		    for(int i = 0 ; i<b ; i++) {   //  OnaylÄ±larÄ± yerelden sil
 		    	  File silbeni = new File(yerelklasoryolu+"/"+"+"+artilisonrasi[i]);
 			  	  silbeni.delete();
 			  	if (silbeni.exists()==true) {
@@ -311,7 +319,7 @@ public class Analiste implements ActionListener {
             inputStream.close();
             outputStream.close();
  
-            System.out.println("Dosya Gönderildi");
+            System.out.println("Dosya GÃ¶nderildi");
         } catch (IOException ex) { 
         	ex.printStackTrace();
         	ftphata=true;
@@ -337,21 +345,26 @@ public class Analiste implements ActionListener {
 		}
 		return;
 	}
-		public static void txtolustur() {   // mevcut değil ise burada oluştur
+		public static void txtolustur() {   // mevcut deÄŸil ise burada oluÅŸtur
 	
 
-    	try {          // TXT DOSYASINI  (VERİ TABANI ) OLUŞTUR
+    	try {          // TXT DOSYASINI  (VERÄ° TABANI ) OLUÅTUR
     	      File myObj = new File(yerelklasoryolu+"/asgard.txt");
 	          myObj.createNewFile();
 	        } catch (IOException e2) {
 	        	e2.printStackTrace();
 	        }
 	
-    	try {   // bos veri tabanına 1 numaralı ilk kaydı ekle. 
+    	try {   // bos veri tabanÄ±na 1 numaralÄ± ilk kaydÄ± ekle. 
 	    	  FileWriter myWriter = new FileWriter(yerelklasoryolu+"/asgard.txt",true);
 	          PrintWriter p = new PrintWriter(new BufferedWriter(myWriter));
 	    
 	          p.println("Lutfen Bekleyin.");
+	          p.println("");
+	          p.println("2021- H.Emre Aral");
+	          p.println("emre@aral.web.tr");
+	          p.println("Kodlari goruntulemek icin");
+	          p.println("https://github.com/emrearal/Pdf_Fatura_Onaylama_Yazilimi");
 	           p.close();
       
 	        } catch (IOException i) {
@@ -364,4 +377,3 @@ public class Analiste implements ActionListener {
 }
 		
 }
-
