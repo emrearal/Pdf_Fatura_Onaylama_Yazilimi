@@ -1,6 +1,5 @@
 package faturaonaylama;
 
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -21,14 +20,19 @@ public class Bilgipenceresi implements ActionListener {
 		    JPanel panel=new JPanel();
 			f= new JFrame(); 
 			f.setResizable(false);
+			
 			f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			if (Analiste.oldur==true) {
+				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			}
+			
 	        area=new JTextArea();  
 	        area.setEditable(false);
 	        area.setBounds(10,30, 200,100);  
 	        area.setLineWrap(true);
 	        area.setWrapStyleWord(true);
 	        JScrollPane sp=new JScrollPane(area);
-	        sp.setPreferredSize(new Dimension(180,120));
+	        sp.setPreferredSize(new Dimension(180,90));
 	        
 	        JButton dugme=new JButton("Tamam");
 	        dugme.addActionListener( new Bilgipenceresi());
@@ -49,7 +53,9 @@ public class Bilgipenceresi implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		if (Analiste.oldur==true) {
+			System.exit(0);
+		}
 		f.dispose();
 	}
 }
