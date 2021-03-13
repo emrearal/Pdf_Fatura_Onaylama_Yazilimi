@@ -15,7 +15,7 @@ public class Babametod {
 			          .toURI()
 			          .getPath();
 			
-			Analiste.yerelklasoryolu = jarPath.substring(0,jarPath.lastIndexOf("/"))+"/yenifaturalar";
+			Analiste.yerelklasoryolu = jarPath.substring(1,jarPath.lastIndexOf("/"))+"/yenifaturalar";
 							
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
