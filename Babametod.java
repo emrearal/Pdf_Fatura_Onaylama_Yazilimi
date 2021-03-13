@@ -1,10 +1,29 @@
 package faturaonaylama;
 
+import java.net.URISyntaxException;
+
 public class Babametod {
 
 	public static void main(String[] args) {
-	babametod();  //Bunu bu þekilde açmamým sebebi SWT widget'in diðer tüm pencereleri kilitlemesi
-	              // JFrame veya JDialog olmayan bir sýnýftan çaðýrýlmalý. 
+		
+		//
+		try {    // Program ÅŸu anda hangi klasÃ¶rde Ã§alÄ±ÅŸÄ±yor ? 
+			String jarPath = Babametod.class
+			          .getProtectionDomain()
+			          .getCodeSource()
+			          .getLocation()
+			          .toURI()
+			          .getPath();
+			
+			Analiste.yerelklasoryolu = jarPath.substring(0,jarPath.lastIndexOf("/"))+"/yenifaturalar";
+							
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+	babametod();  //Bunu bu ÅŸekilde aÃ§mamÄ±m sebebi SWT widget'in diÄŸer tÃ¼m pencereleri kilitlemesi
+	              // JFrame veya JDialog olmayan bir sÄ±nÄ±ftan Ã§aÄŸÄ±rÄ±lmalÄ±. 
 	}
 
    public static void babametod() {
