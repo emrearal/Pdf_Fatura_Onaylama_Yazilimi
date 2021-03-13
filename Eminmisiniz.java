@@ -11,25 +11,22 @@ public class Eminmisiniz  {
 	static JButton yavrudugme ;
 	static JButton yavrudugme2 ;
 	static JDialog yavru ;
-	static JLabel baslik,baslik2,baslik3 ;
+	static JLabel baslik,baslik2;
 	static String cevap="";
 		
 			public static String sonkarar(int a, int b) {
 				
 				yavrudugme= new JButton("Tamam");
-				yavrudugme2 = new JButton("İptal");
-				yavru = new JDialog(Analiste.cerceve,"Faturaları FTP'ye Gönderme Onayı",true); 
+				yavrudugme2 = new JButton("Ä°ptal");
+				yavru = new JDialog(Analiste.cerceve,"FaturalarÄ± FTP'ye GÃ¶nderme OnayÄ±",true); 
 			
 				yavru.setResizable(false);
 					
-				baslik = new JLabel("Yerel Klasördeki Onaylılar Gönderilecek ve Tüm Dosyalar Silinecek." );
-				baslik.setBounds(10,3,405,20);
+				baslik = new JLabel("Yerel KlasÃ¶rdeki OnaylÄ±lar GÃ¶nderilecek ve TÃ¼m Dosyalar Silinecek." );
+				baslik.setBounds(10,8,405,20);
 				
-				baslik2 = new JLabel("Orjinal Fatura Sayısı :"+b+"  Onaylanmış Fatura Sayısı :"+a);
-				baslik2.setBounds(10,24,405,20);
-				
-				baslik3 = new JLabel("Tamam'a Bastıktan Sonra Bildirim Gelene Kadar Programı Kapatmayın." );
-				baslik3.setBounds(10,46,405,20);
+				baslik2 = new JLabel("Orjinal Fatura SayÄ±sÄ± :"+b+"  OnaylanmÄ±ÅŸ Fatura SayÄ±sÄ± :"+a);
+				baslik2.setBounds(10,40,405,20);
 				
 				yavru.setSize(440,150); 
 				yavru.setLayout(null);
@@ -39,7 +36,6 @@ public class Eminmisiniz  {
 				yavru.add(yavrudugme2);
 				yavru.add(baslik);
 				yavru.add(baslik2);
-				yavru.add(baslik3);
 				
 				yavrudugme.setBounds(80,75,80,20);
 				yavrudugme.setVisible(true);
