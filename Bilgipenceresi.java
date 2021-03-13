@@ -24,6 +24,7 @@ public class Bilgipenceresi implements ActionListener {
 			f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			if (Analiste.oldur==true) {
 				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				f.setUndecorated(true);
 			}
 			
 	        area=new JTextArea();  
