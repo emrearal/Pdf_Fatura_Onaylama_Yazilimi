@@ -34,14 +34,10 @@ public void open() {
   
     while (!shell.isDisposed() ) {
         if (!display.readAndDispatch() ) {
-        	if (kapat==true) {
-        		kapat=false;
-        		shell.close();
-        	}
+        	
         	if (ikincigelis==true) {
         		
         		ikincigelis=false;
-        		
         		browser.setUrl(Analiste.secilenyol+Analiste.secilendosya);
         		Damgala.damgala();
         		Analiste.cerceve.dispose();
@@ -49,7 +45,6 @@ public void open() {
         	}
         	
         	if (degistirdim==true) {
-        		
         		browser.setUrl(Analiste.secilenyol+Analiste.secilendosya);
         		degistirdim=false;
          	}
@@ -62,7 +57,7 @@ public void open() {
 protected void createContents() {
 	
 	shell = new Shell();
-    shell.addListener(SWT.Close, new Listener()     // Shell kapanmasýn
+    shell.addListener(SWT.Close, new Listener()     // Shell kapanmasÄ±n
    {
        public void handleEvent(Event event)
       {
@@ -72,7 +67,7 @@ protected void createContents() {
  
     shell.setSize(1040,720);
     shell.setLocation(1, 5);
-    shell.setText("FATURA GORUNTULEME PENCERESÝ ");
+    shell.setText("FATURA GORUNTULEME PENCERESÄ° ");
      browser= new Browser(shell, SWT.NONE);
 	
     browser.setUrl(neymis);
