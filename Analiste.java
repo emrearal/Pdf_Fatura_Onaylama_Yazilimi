@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,11 +36,11 @@ public class Analiste implements ActionListener {
 	static JTable tablo;
 	static String[][] pdflistesi,pdflistesibenzersiz;
 	static String secilendosya,secilenyol;
-	static String yerelklasoryolu="C:/Users/emrea/Desktop/yenifaturalar";
+	static String yerelklasoryolu;
 	static String ftpyolu="/sanal/faturaonayklasoru/1-operasyononayladi/";
-	static String host = "88.188.198.444";
-    static String user = "user";
-    static String pass = "password";
+	static String host = "78.188.198.222";
+    static String user = "tank";
+    static String pass = "123456";
     
 	static String[] artilisonrasi;
 	static JScrollPane sp;
@@ -66,6 +65,11 @@ public class Analiste implements ActionListener {
 	   cerceve = new JFrame("ASGARD FATURA ONAY");
 	   cerceve.setLocation(1040,5);
 	   cerceve.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	  
+	   if (oldur==true) {
+		   cerceve.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);   
+	   }
+	   
 	   panel1 = new JPanel();
 	
 	   dugme1 =new JButton("FATURA İNCELE");
@@ -79,6 +83,10 @@ public class Analiste implements ActionListener {
 	   dugme3 =new JButton("KAPAT");
 	   dugme3.addActionListener(new Analiste());
 	   dugme3.setActionCommand(actions.kapat.name());
+	   
+	   if(oldur==true) {
+			dugme1.setVisible(false);dugme2.setVisible(false);dugme3.setVisible(false);
+		}
 	   
 	   panel1.add(dugme1);
 	   panel1.add(dugme2);
@@ -242,13 +250,18 @@ public class Analiste implements ActionListener {
 	      if (Eminmisiniz.sonkarar(artilisayisi, artisizsayisi).equals("hayir")) {
 	    	  return;
 	      }
-		    //Goruntule.kapat=true; 
+		
+	        txtvarmi();
 		    
-		    txtvarmi();
+		    oldur=true; // kullanıcı ftp aktarımı sırasında kurcalamasın diye düğmeler iptal
+		    cerceve.dispose();
+		    Analiste.anametod();
 		    
 		    Goruntule.degistirdim=true;
 		    secilendosya="asgard.txt";
 		    secilenyol=yerelklasoryolu+"/";
+		    
+		    
 		    			
 		    upload();  // Onaylıları FTP sunucusuna gönder
 		     
@@ -279,8 +292,7 @@ public class Analiste implements ActionListener {
 			  	  }
 			    }  
 		
-		    cerceve.dispose();
-		    Analiste.anametod();
+		    
 	      return;
        }
 		if (e.getActionCommand()==actions.kapat.name()) {
@@ -329,22 +341,21 @@ public class Analiste implements ActionListener {
 		}  
     }
 	
-	   public static void txtvarmi() {   //asgard.txt dosyasi mevcut mu ?
+	   public static void txtvarmi() {   //asgard.txt dosyası var mı ?
 		
 		try {   
 			FileReader input = new FileReader(yerelklasoryolu+"/asgard.txt");
 			LineNumberReader count = new LineNumberReader(input);
-			try {
-				count.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}    
-		} catch (FileNotFoundException e1) {
+			count.close();
+		} catch (Exception e1) {
 			txtolustur();
 			e1.printStackTrace();
 		}
 		return;
+		
+		
 	}
+	
 		public static void txtolustur() {   // mevcut değil ise burada oluştur
 	
 
@@ -360,6 +371,7 @@ public class Analiste implements ActionListener {
 	          PrintWriter p = new PrintWriter(new BufferedWriter(myWriter));
 	    
 	          p.println("Lutfen Bekleyin.");
+	          p.println("Islem Bittikten Sonra Acilacak Bilgi Penceresinde TAMAM'a Basarak Programi Kapatabilirsiniz");
 	          p.println("");
 	          p.println("2021- H.Emre Aral");
 	          p.println("emre@aral.web.tr");
@@ -377,3 +389,4 @@ public class Analiste implements ActionListener {
 }
 		
 }
+
