@@ -169,6 +169,7 @@ public class Analiste implements ActionListener {
     // Tablo oluşturma 
         String[] sutun = { "OPERASYON MODÜLÜ" };
         tablo= new JTable(pdflistesibenzersiz,sutun);  
+		tablo.setDefaultEditor(Object.class, null);	// tabloya elle düzeltme yapılamasın
 		sp=new JScrollPane(tablo); 
 		sp.setPreferredSize(new Dimension(300,645));
 		
